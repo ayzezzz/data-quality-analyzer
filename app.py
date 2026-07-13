@@ -11,18 +11,16 @@ st.write("Upload your CSV file to automatically analyze, clean, and score your d
 uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
 
 if uploaded_file is not None:
+    # Keep data in session state to prevent losing progress on rerender
     if 'df' not in st.session_state:
         st.session_state.df = pd.read_csv(uploaded_file)
     
     df = st.session_state.df
 
-    # Smart Duplicate Check: Ignore unique ID columns if they exist
-    # This prevents artificial 'unique' rows caused by auto-generated IDs
-    ignore_cols = ['job_id', 'id', 'ID', 'Index']
-    check_cols = [col for col in df.columns if col not in ignore_cols]
-    
+    # Data Quality Score calculation (0-100)
     total_cells = df.shape[0] * df.shape[1]
     missing_cells = df.isnull().sum().sum()
+    check_cols = [col for col in df.columns if col != 'job_id']
     duplicate_rows = df.duplicated(subset=check_cols).sum()
     
     missing_penalty = (missing_cells / total_cells) * 100 if total_cells > 0 else 0
@@ -83,10 +81,15 @@ if uploaded_file is not None:
     with col2:
         st.subheader("🛠️ Data Cleaning Wizard")
         
-        if duplicate_rows > 0:
+        if duplicate_rows > 0: # Butonun sadece kopya varken çıkmasını da garantiliyoruz
             if st.button("Remove Duplicate Rows"):
+                old_row_count = df.shape[0]
                 st.session_state.df = df.drop_duplicates(subset=check_cols)
-                st.success("Duplicate rows removed successfully!")
+                new_row_count = st.session_state.df.shape[0]
+                deleted_rows = old_row_count - new_row_count
+                
+                # Başarı mesajının içine kaç satır silindiğini yazıyoruz
+                st.success(f"Success! {deleted_rows} duplicate rows removed successfully!")
                 st.rerun()
         else:
             st.info("No duplicate rows found.")
