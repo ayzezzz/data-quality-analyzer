@@ -1,27 +1,49 @@
 # 📊 Data Quality Analyzer & Cleaner
 
-An interactive, user-friendly web application built with Streamlit and Pandas designed to automatically analyze, evaluate, and clean CSV datasets instantly. 
+A Streamlit application for analyzing, assessing, and cleaning CSV datasets. The tool helps identify common data quality issues and provides interactive options to clean and export the processed dataset.
 
-This tool serves as an essential utility for data analysts to accelerate the data-pre-processing phase.
+---
 
-## Key Features
-- **Data Quality Scoring:** Dynamically calculates an overall data quality score (0-100%) based on total missing cells and duplicate rows.
-- **Data Overview:** Instantly displays total rows, columns, duplicate records, and a neat dataset preview.
-- **Missing Data Analysis:** Identifies columns containing missing data with exact counts and percentages, coupled with a visual bar chart representation.
-- **Column Distribution Analysis:** Interactive visualization allowing users to select any column and instantly view its distribution (Histogram with KDE for numerical data, Bar chart for categorical data).
-- **Interactive Data Cleaning Wizard:** - One-click removal of all duplicate records.
-  - Advanced missing value imputation choices (Drop rows, Fill with Mean/Median for numeric data, or Fill with Mode for categorical data).
-- **Export Refined Data:** Download the completely cleaned dataset as a fresh CSV file with a single click.
+## 🚀 Features
+
+- Calculate an overall data quality score based on missing values and duplicate records.
+- Display dataset summary, including rows, columns, duplicates, and a data preview.
+- Analyze missing values with counts, percentages, and visualizations.
+- Explore column distributions using histograms or bar charts.
+- Remove duplicate rows.
+- Handle missing values using:
+  - Drop rows
+  - Mean or median (numeric columns)
+  - Mode (categorical columns)
+- Export the cleaned dataset as a CSV file.
+
+---
 
 ## 🛠️ Tech Stack
-- **Core:** Python
-- **Data Manipulation:** Pandas
-- **Web Framework:** Streamlit
-- **Data Visualization:** Matplotlib, Seaborn
 
-## 💻 How to Run Locally
+- Python
+- Pandas
+- Streamlit
+- Matplotlib
+- Seaborn
 
-1. **Clone the repository:**
-   ```bash
-   git clone <your-repository-url>
-   cd <your-repository-folder>
+---
+## 💻 Run Locally
+
+```bash
+# Clone the repository and navigate to the project folder
+git clone [https://github.com/ayzezzz/data-quality-analyzer.git](https://github.com/ayzezzz/data-quality-analyzer.git)
+cd data-quality-analyzer
+
+# Create a virtual environment
+python -m venv .venv
+
+# Activate the virtual environment:
+# On macOS / Linux:
+source .venv/bin/activate
+# On Windows:
+# .venv\Scripts\activate
+
+# Install requirements and run the application
+pip install -r requirements.txt
+python -m streamlit run app.py
